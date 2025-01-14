@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
 
-DEBUG = True
+DEBUG = not config("DEBUG",cast=bool) 
 
 ALLOWED_HOSTS = [i for i in config("ALLOWED_HOSTS").split(",")]
 

@@ -11,23 +11,12 @@ DATABASES = {
 
 SIMPLE_JWT = {
     "TOKEN_OBTAIN_SERIALIZER": "apis.auth.serializers.CustomTokenObtainPairSerializer",
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=24 * 60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1 * 14),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
-    "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
-    "VERIFYING_KEY": "",
-    "AUDIENCE": None,
-    "ISSUER": "Udoir App",
+    "ISSUER": "MFAS",
     "AUTH_HEADER_TYPES": ("Bearer",),
-    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    "USER_ID_FIELD": "id",
-    "USER_ID_CLAIM": "user_id",
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "TOKEN_TYPE_CLAIM": "token_type",
-    "JTI_CLAIM": "udoir-app",
 }
 
 
@@ -42,7 +31,7 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.JSONParser",
     ],
     "DEFAULT_PAGINATION_CLASS": "utils.custom_paginator.CustomPagination",
-    "PAGE_SIZE": 100,
+    "PAGE_SIZE": 10,
 }
 
 SPECTACULAR_SETTINGS = {
@@ -50,7 +39,5 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "A minimal Django-based backend system to manage mutual funds and user investments, focusing on key API functionality",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    "COMPONENT_SPLIT_REQUEST": True,
     "SORT_OPERATIONS": False,
-    "SECURITY": [{"Bearer": []}],
 }

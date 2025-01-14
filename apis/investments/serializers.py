@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from apps.accountings.models import UserInvestments
-
+from drf_spectacular.utils import extend_schema_field
 
 class UserInvestmentsListSerializer(serializers.ModelSerializer):
     """
@@ -9,6 +9,7 @@ class UserInvestmentsListSerializer(serializers.ModelSerializer):
     """
     mutual_fund = serializers.SerializerMethodField()
 
+    @extend_schema_field(field=serializers.CharField()) # Telling spectacular that this method returns string
     def get_mutual_fund(self, instance: UserInvestments):
         return instance.mutual_fund.name
 
