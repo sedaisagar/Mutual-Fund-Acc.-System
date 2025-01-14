@@ -70,7 +70,7 @@ python manage.py test tests.models.mutual_funds
 ```
 ### Test For User Investment Model
 ```
-python manage.py test tests.models.investment
+python manage.py test tests.models.investments
 ```
 ### Test For User Register Api
 ```
