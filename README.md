@@ -88,6 +88,237 @@ python manage.py test tests.apis.mutual_funds
 ```
 python manage.py test tests.apis.investments
 ```
+## Api EndPoints
 
+#### POST - /api/register/
 
+```
+Example Payload:
+{
+  "email": "user@example.com",
+  "password": "string"
+}
+
+Example Success Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "id": "ef09c3d5-2ca0-4773-842e-a7f2316f0631",
+    "email": "user@example.com"
+  }
+}, 
+Example Error Response:
+{
+  "message": "Validation Error",
+  "data": {
+    "type": "validation_error",
+    "errors": [
+      {
+        "code": "unique",
+        "detail": "user with this Email Address already exists.",
+        "attr": "email"
+      }
+    ]
+  }
+}
+```
+#### POST - /api/token/
+
+```
+Example Payload:
+{
+  "email": "user@example.com",
+  "password": "string"
+}
+
+Example Success Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "id": "ef09c3d5-2ca0-4773-842e-a7f2316f0631",
+    "role": "U",
+    "email": "user@example.com",
+    "refresh": "...",
+    "access": "..."
+  }
+}
+Example Error Response:
+{
+  "message": "Client Error",
+  "data": {
+    "type": "client_error",
+    "errors": [
+      {
+        "code": "no_active_account",
+        "detail": "No active account found with the given credentials",
+        "attr": null
+      }
+    ]
+  }
+}
+```
+#### POST - /api/token/refresh/
+
+```
+Example Payload:
+{
+  "refresh": "..."
+}
+
+Example Success Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "access": "..."
+  }
+}
+Example Error Response:
+{
+  "message": "Client Error",
+  "data": {
+    "type": "client_error",
+    "errors": [
+      {
+        "code": "token_not_valid",
+        "detail": "Token is invalid or expired",
+        "attr": "detail"
+      },
+      {
+        "code": "token_not_valid",
+        "detail": "token_not_valid",
+        "attr": "code"
+      }
+    ]
+  }
+}
+```
+#### GET - /api/mutual-funds/
+
+```
+Example  Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "results": [
+      {
+        "id": "e17a3b7f-2b07-4fb7-8cfe-34e3f5c8bbe2",
+        "name": "Blue Chip Fund",
+        "fund_type": "E",
+        "nav": 10
+      }
+    ],
+    "pagination": {
+      "current_limit": 10,
+      "next": null,
+      "previous": null,
+      "count": 1,
+      "current_page": 1
+    }
+  }
+}
+```
+#### POST - /api/mutual-funds/
+
+```
+Example Payload:
+{
+  "name": "Blue Chip Fund",
+  "fund_type": "E",
+  "nav": 10
+}
+Example  Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "id": "e17a3b7f-2b07-4fb7-8cfe-34e3f5c8bbe2",
+    "created_at": "2025-01-14T18:50:07.209925Z",
+    "modified_at": "2025-01-14T18:50:07.209925Z",
+    "name": "Blue Chip Fund",
+    "fund_type": "E",
+    "nav": 10
+  }
+}
+```
+#### PATCH - /api/mutual-funds/{id}/
+
+```
+Example Payload:
+{
+  "nav": 9
+}
+
+Example  Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "nav": 5
+  }
+}
+```
+#### POST - /api/investments/
+
+```
+Example Payload:
+{
+  "units": 1,
+  "mutual_fund": "e17a3b7f-2b07-4fb7-8cfe-34e3f5c8bbe2"
+}
+
+Example  Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "id": "ce3adf21-5934-4fa3-b212-4dfffa07330f",
+    "created_at": "2025-01-14T18:52:49.721090Z",
+    "modified_at": "2025-01-14T18:52:49.721090Z",
+    "units": 1,
+    "user": "5f446b3a-e483-4912-be15-b18ecef90825",
+    "mutual_fund": "e17a3b7f-2b07-4fb7-8cfe-34e3f5c8bbe2"
+  }
+}
+```
+#### GET - /api/investments/
+
+```
+
+Example  Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "results": [
+      {
+        "id": "ce3adf21-5934-4fa3-b212-4dfffa07330f",
+        "mutual_fund": "Blue Chip Fund",
+        "units": 1
+      }
+    ],
+    "pagination": {
+      "current_limit": 10,
+      "next": null,
+      "previous": null,
+      "count": 1,
+      "current_page": 1
+    }
+  }
+}
+```
+
+#### GET - /api/report/
+
+```
+
+Example  Response:
+{
+  "message": "Operation Success",
+  "data": {
+    "results": [
+      {
+        "mutual_fund": "Blue Chip Fund",
+        "total_units": 1,
+        "total_value": 5
+      }
+    ]
+  }
+}
+```
 

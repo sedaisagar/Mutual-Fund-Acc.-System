@@ -2,7 +2,12 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from apps.authentication.models import User
 from .serializers import UserRegistrationSerializer
-from drf_spectacular.utils import extend_schema, extend_schema_view
+from drf_spectacular.utils import (
+    extend_schema,
+    extend_schema_view,
+    OpenApiResponse,
+    OpenApiExample,
+)
 from utils.custom_paginator import CustomPagination
 
 
@@ -10,6 +15,14 @@ from utils.custom_paginator import CustomPagination
     post=extend_schema(
         summary="User registration api",
         tags=["Auth"],
+        responses={
+            status.HTTP_201_CREATED: OpenApiResponse(
+                description="User successfully created",
+            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
+                description="Bad request (e.g., missing or invalid data)",
+            ),
+        },
     )
 )
 class UserRegistrationView(generics.CreateAPIView):
@@ -20,7 +33,7 @@ class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
 
-    def create(self, request, *args, **kwargs): 
+    def create(self, request, *args, **kwargs):
         # Use the DRF's built-in functionality to handle the data validation and saving
         serializer = self.get_serializer(data=request.data.copy())
         serializer.is_valid(raise_exception=True)
