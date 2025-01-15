@@ -22,7 +22,7 @@ source venv/bin/activate
 
 ### Install Packages
 ```
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 ### Generate New Secret Key 
